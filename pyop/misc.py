@@ -1,14 +1,15 @@
-from .base import Op
+from .base import Op, Op_partial
 
-# other not related functions that i like to load together
+
 def _if(x, a, b):
     if x: return a
     return b
 
+@Op
 def _print(x):
     print(x)
     return x
 
-@Op
-def _dot(method, x):
+@Op_partial(0)
+def _dot(x, method):
     return getattr(method)(x)
