@@ -1,0 +1,28 @@
+* pyop
+
+Mis-use python in a proper way
+
+#+BEGIN_SRC ipython :session 
+from pyop import O, _
+
+a = [1,2,3,4,5]
+b = 10
+#+END_SRC
+
+#+BEGIN_SRC ipython :session 
+b // O(_+1)
+#+END_SRC
+
+#+RESULTS:
+: # Out[3]:
+: : 11
+
+#+BEGIN_SRC ipython :session
+a @ O(_+1)
+#+END_SRC
+
+#+RESULTS:
+: # Out[4]:
+: : [2, 3, 4, 5, 6]
+
+Why have i not thought about it before?
