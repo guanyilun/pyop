@@ -1,15 +1,21 @@
-from .base import Op, Op_partial
-
-
-def _if(x, a, b):
-    if x: return a
-    return b
+from .base import Op, Op0
 
 @Op
-def _print(x):
+def print_(x):
     print(x)
     return x
 
-@Op_partial(0)
-def _dot(x, method):
-    return getattr(method)(x)
+@Op0
+def dot_(x, name, *args, **kwargs):
+    try: return getattr(x, name)(*args, **kwargs)
+    except: return getattr(x, name)
+
+@Op0
+def plot_(x, *args, **kwargs):
+    from matplotlib import pyplot as plt
+    plt.plot(x, *args, **kwargs)
+
+
+def if_(x, a, b):
+    if x: return a
+    return b
