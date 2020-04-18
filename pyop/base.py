@@ -6,10 +6,10 @@ class O:
         self.kwargs = kwargs
     def __call__(self, x):
         return self.func(x, *self.args, **self.kwargs)
-    def __rmatmul__(self, other):
-        return [self.func(x, *self.args, **self.kwargs) for x in other]
+    def __rmatmul__(self, others):
+        return [self(x) for x in others]
     def __rfloordiv__(self, other):
-        return self.func(other, *self.args, **self.kwargs)
+        return self(other)
 
 def Op_partial(i=0):
     def wrap(fun):
@@ -20,13 +20,13 @@ def Op_partial(i=0):
                 self.args = args
                 self.kwargs = kwargs
             def __call__(self, x):
-                args, kwargs = self.args, self.kwargs
+                args, kwargs = list(self.args), self.kwargs
                 args.insert(i, x)
                 return fun(*args, **kwargs)
-            def __rmatmul__(self, other):
-                return [fun(other, *self.args, **self.kwargs) for x in other]
-            def __rfloordiv__(self, other):
-                return fun(other, *self.args, **self.kwargs)            
+            def __rmatmul__(self, others):
+                return [self.__call__(x) for x in others]
+            def __rfloordiv__(self, x):
+                return self.__call__(x)
         return tmp
     return wrap
 

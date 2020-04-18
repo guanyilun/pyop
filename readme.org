@@ -1,30 +1,111 @@
 * pyop
 
-Mis-use python in a proper way
+Mis-use python in a proper way. To install i would use
+
+#+BEGIN_SRC bash
+pip install -e .
+#+END_SRC
+
+so it's easy to add more of these small functions later on. 
+
+** =O= function
+What it does is to wrap around a function such that one can do the following
 
 #+BEGIN_SRC python :session 
-from pyop import O, _
+from pyop import *
 
-a = [1,2,3,4,5]
-b = 10
+x = [1,2,3,4,5]
+x // O(len) // O(print)
 #+END_SRC
+Output:
+#+begin_example
+5
+#+end_example
 
-#+BEGIN_SRC python :session 
-b // O(_+1)
+This is a pipe operation that the output is passed directly to the next.
+Similarly
+
+#+BEGIN_SRC python
+x @ O(lambda x: x+1)
 #+END_SRC
+Output:
+#+begin_example
+[2, 3, 4, 5, 6]
+#+end_example
 
-#+BEGIN_EXAMPLE:
-# Out[3]:
-: 11
-#+END_EXAMPLE
-
-#+BEGIN_SRC python :session
-a @ O(_+1)
+#+BEGIN_SRC python
+x // O(enumerate) @ O(lambda x: x[0]) // O(print)
 #+END_SRC
+Output:
+#+begin_example
+[2, 3, 4, 5, 6]
+#+end_example
 
-#+BEGIN_EXAMPLE:
-# Out[4]:
-: [2, 3, 4, 5, 6]
-#+END_EXAMPLE
+You get the idea. 
 
-Why have i not thought about it before?
+** Useful built-in functions
+I have made a number of these =O= functions and give them a name that
+often add a postfix _ (underscore) to the function name. This will
+make it easy to use and one don't have to always add =O= in front. Let
+me illustrate some of them here.
+
+First i have borrowed some basic lisp functions here
+#+BEGIN_SRC python
+x // cdr // cdr // car
+#+END_SRC
+Output:
+#+begin_example
+3
+#+end_example
+This is equivalent to =x // caddr=. 
+
+#+BEGIN_SRC python
+x // filter_(lambda x: x>2) // list_ // print_
+#+END_SRC
+#+begin_example
+[3, 4, 5]
+#+end_example
+The original function should be obvious (without _). I've also borrowed the =_= function from
+=fn= package and have it available by default, in interactive environment like ipython notebook
+=_= won't work so one can use the alias =it_= that i have made. With this the above function 
+look like
+#+BEGIN_SRC python
+x // filter_(it_>2) // list_ // print_ 
+#+END_SRC
+The output is the same as above. 
+
+#+BEGIN_SRC python
+x = [1,1,2,3,3,4,6,8,2,0]
+x // reduce_(it_+it_)
+#+END_SRC
+Output:
+#+begin_example
+30
+#+end_example
+
+#+BEGIN_SRC python
+x // topk_(3)
+#+END_SRC
+Output:
+#+begin_example
+(8, 6, 4)
+#+end_example
+Note these functions wrap around functions in toolz.itertoolz which is also made availabe
+in the namespace. 
+
+#+BEGIN_SRC python
+x // partition_(3) // list_
+#+END_SRC
+Output:
+#+begin_example
+[(1, 1, 2), (3, 3, 4), (6, 8, 2)]
+#+end_example
+
+#+BEGIN_SRC python
+x // partition_(3) // list_ @ car
+#+END_SRC
+Output:
+#+begin_example
+[1, 3, 6]
+#+end_example
+This is pure joy to play with. Enjoy!

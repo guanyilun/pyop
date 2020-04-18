@@ -1,5 +1,5 @@
-from toolz import itertools
-
+from toolz import itertoolz
+from functools import reduce
 from .base import Op, Op0, Op1
 
 def isiterable(x):
@@ -49,8 +49,8 @@ def last(x):
 @Op
 def first(x):
     return x // car
-@Op0
-def filter_(x, func):
+@Op1
+def filter_(func, x):
     return filter(func, x) 
 @Op
 def list_(x):
@@ -66,19 +66,19 @@ def reduce_(x, func):
     return reduce(func, x)
 @Op0
 def partition_(x, n):
-    return itertools.partition(n, x) 
+    return itertoolz.partition(n, x)
 @Op0
 def take_(x, n):
-    return itertools.take(n, x)
+    return itertoolz.take(n, x)
 @Op0
 def remove_(x, func):
-    return itertools.remove(func, x)
+    return itertoolz.remove(func, x)
 @Op0
 def topk_(x, k):
-    return itertools.topk(k, x)
+    return itertoolz.topk(k, x)
 @Op
 def unique_(x):
-    return itertools.unique(x)
+    return itertoolz.unique(x)
 @Op0
 def plunk_(x, i):
-    return itertools.plunk(i, x)
+    return itertoolz.plunk(i, x)
