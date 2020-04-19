@@ -23,7 +23,7 @@ Output:
 #+end_example
 
 This is a pipe operation that the output is passed directly to the next.
-Similarly
+Similarly, =@= is a mapping operation
 
 #+BEGIN_SRC python
 x @ O(lambda x: x+1)
@@ -51,13 +51,13 @@ me illustrate some of them here.
 
 First i have borrowed some basic lisp functions here
 #+BEGIN_SRC python
-x // cdr // cdr // car
+x // cdr_ // cdr_ // car_
 #+END_SRC
 Output:
 #+begin_example
 3
 #+end_example
-This is equivalent to =x // caddr=. 
+This is equivalent to =x // caddr_=.
 
 #+BEGIN_SRC python
 x // filter_(lambda x: x>2) // list_ // print_
@@ -102,7 +102,7 @@ Output:
 #+end_example
 
 #+BEGIN_SRC python
-x // partition_(3) // list_ @ car
+x // partition_(3) // list_ @ car_
 #+END_SRC
 Output:
 #+begin_example

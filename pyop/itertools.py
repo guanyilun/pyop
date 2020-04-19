@@ -7,51 +7,51 @@ def isiterable(x):
     except: return False
     return True
 @Op
-def car(x):
+def car_(x):
     assert isiterable(x)
     if len(x) == 0: return None
     return x[0]
 @Op
-def cdr(x):
-    assert isiterable(x)    
+def cdr_(x):
+    assert isiterable(x)
     if len(x) == 0: return ()
     return x[1:]
 @Op
-def cadr(x):
+def cadr_(x):
     return x // cdr // car
 @Op
-def caar(x):
+def caar_(x):
     return x // car // car
 @Op
-def cddr(x):
+def cddr_(x):
     return x // cdr // cdr
 @Op
-def cdar(x):
+def cdar_(x):
     return x // car // cdr
 @Op
-def caaar(x):
+def caaar_(x):
     return x // car // caar
 @Op
-def caadr(x):
+def caadr_(x):
     return x // cdr // caar
 @Op
-def cadar(x):
+def cadar_(x):
     return x // car // cadr
 @Op
-def caddr(x):
+def caddr_(x):
     return x // cdr // cadr
 @Op
-def cdaar(x):
+def cdaar_(x):
     return x // car // cdar
 @Op
-def last(x):
+def last_(x):
     return x[-1]
 @Op
-def first(x):
+def first_(x):
     return x // car
 @Op1
 def filter_(func, x):
-    return filter(func, x) 
+    return filter(func, x)
 @Op
 def list_(x):
     return list(x)
@@ -82,3 +82,6 @@ def unique_(x):
 @Op0
 def plunk_(x, i):
     return itertoolz.plunk(i, x)
+@Op0
+def repeat_(x, n):
+    return [x for x in range(n)]

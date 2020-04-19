@@ -38,4 +38,3 @@ Op0 = Op_partial(i=0)
 Op1 = Op_partial(i=1)
 Op2 = Op_partial(i=2)
 Op3 = Op_partial(i=3)
-

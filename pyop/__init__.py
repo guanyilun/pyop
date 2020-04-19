@@ -7,7 +7,8 @@ from toolz.itertoolz import *
 from toolz.functoolz import *
 from toolz.dicttoolz import *
 
-from fn import _
+from fn import _, F
 # for interactive notebook _ means last evaluation
 # so i give an alias here
-it_ = _
+# different aliases
+it_ = x_ = _
